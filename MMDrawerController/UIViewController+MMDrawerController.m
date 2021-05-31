@@ -39,6 +39,7 @@
     if([self isEqual:self.mm_drawerController.leftDrawerViewController] ||
        [self.navigationController isEqual:self.mm_drawerController.leftDrawerViewController]){
         CGRect rect = self.mm_drawerController.view.bounds;
+        rect.origin.x = -CGRectGetWidth(self.mm_drawerController.view.bounds);//左侧抽屉位于试图左侧（口口）
         rect.size.width = self.mm_drawerController.maximumLeftDrawerWidth;
         if (self.mm_drawerController.showsStatusBarBackgroundView) {
             rect.size.height -= 20.0f;
@@ -50,7 +51,8 @@
              [self.navigationController isEqual:self.mm_drawerController.rightDrawerViewController]){
         CGRect rect = self.mm_drawerController.view.bounds;
         rect.size.width = self.mm_drawerController.maximumRightDrawerWidth;
-        rect.origin.x = CGRectGetWidth(self.mm_drawerController.view.bounds)-rect.size.width;
+//        rect.origin.x = CGRectGetWidth(self.mm_drawerController.view.bounds)-rect.size.width;
+        rect.origin.x = CGRectGetWidth(self.mm_drawerController.view.bounds);//右侧抽屉位于试图右侧（口口）
         if (self.mm_drawerController.showsStatusBarBackgroundView) {
             rect.size.height -= 20.0f;
         }

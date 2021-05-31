@@ -56,6 +56,11 @@ typedef NS_ENUM(NSInteger,MMDrawerSide){
     MMDrawerSideRight,
 };
 
+typedef NS_ENUM(NSInteger, MMDrawerAnimationMode) {
+    MMDrawerAnimationModeOverallPush,
+    MMDrawerAnimationModeHalfPush,
+};
+
 typedef NS_OPTIONS(NSInteger, MMOpenDrawerGestureMode) {
     MMOpenDrawerGestureModeNone                     = 0,
     MMOpenDrawerGestureModePanningNavigationBar     = 1 << 1,
@@ -94,6 +99,7 @@ typedef NS_ENUM(NSInteger, MMDrawerOpenCenterInteractionMode) {
 
 @class  MMDrawerController;
 typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * drawerController, MMDrawerSide drawerSide, CGFloat percentVisible);
+typedef void (^MMDrawerControllerDrawerMovePositionBlock)(MMDrawerController * drawerController, CGFloat originX);
 
 @interface MMDrawerController : UIViewController
 
@@ -193,6 +199,8 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
  */
 @property (nonatomic, assign) MMDrawerOpenCenterInteractionMode centerHiddenInteractionMode;
 
+@property (nonatomic, assign) MMDrawerAnimationMode animationMode;
+
 /**
  The flag determining if a shadow should be drawn off of `centerViewController` when a drawer is open. 
  
@@ -255,6 +263,9 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
  By default, this is set 200.0f.
  */
 @property (nonatomic, assign) CGFloat panVelocityXAnimationThreshold;
+
+// 抽屉不可用
+@property (nonatomic, assign) BOOL drawerNotAvailable;
 
 ///---------------------------------------
 /// @name Initializing a `MMDrawerController`
@@ -451,5 +462,7 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
  @param gestureShouldRecognizeTouchBlock A block object to be called to determine if the given `touch` should be recognized by the given gesture.
  */
 -(void)setGestureShouldRecognizeTouchBlock:(BOOL(^)(MMDrawerController * drawerController, UIGestureRecognizer * gesture, UITouch * touch))gestureShouldRecognizeTouchBlock;
+
+-(void)setDrawerMovePositionBlock:(void(^)(MMDrawerController * drawerController, CGFloat originX))movePositionBlock;
 
 @end
